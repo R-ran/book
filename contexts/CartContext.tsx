@@ -35,9 +35,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       try {
-        setItems(JSON.parse(savedCart));
+        const parsed = JSON.parse(savedCart);
+        // Ensure the parsed data is an array
+        if (Array.isArray(parsed)) {
+          setItems(parsed);
+        } else {
+          console.warn('Invalid cart data in localStorage, clearing it');
+          localStorage.removeItem('cart');
+        }
       } catch (error) {
         console.error('Failed to load cart from localStorage', error);
+        localStorage.removeItem('cart');
       }
     }
   }, []);
@@ -76,10 +84,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const getTotalItems = () => {
+    if (!Array.isArray(items)) return 0;
     return items.reduce((total, item) => total + item.quantity, 0);
   };
 
   const getTotalPrice = () => {
+    if (!Array.isArray(items)) return 0;
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 

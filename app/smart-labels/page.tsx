@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import PayPalButton from '@/components/PayPalButton';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import YouMayAlsoLike from '@/components/YouMayAlsoLike';
@@ -97,7 +96,6 @@ export default function SmartLabelsPage() {
                 >
                   Buy it now!
                 </button>
-                <PayPalButton amount="6.00" currency="USD" description="Smart Labels" />
 
                 <p className="text-xl font-semibold text-gray-700 mt-6">
                   🚚 Reliable shipping
